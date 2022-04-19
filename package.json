@@ -1,0 +1,73 @@
+{
+  "name": "template-node-library",
+  "version": "1.0.0",
+  "main": "dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
+  "author": "Tyler Stewart <git@tylerstewart.ca>",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "prebuild": "rimraf dist",
+    "build": "run-p build:cjs build:esm",
+    "build:cjs": "swc src -d dist/cjs --ignore **/*.ts.js --config module.type=commonjs",
+    "build:esm": "swc src -d dist/esm --ignore **/*.ts.js --config module.type=es6",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:prod": "run-p build build:types",
+    "lint": "xo src/**/*.ts --fix",
+    "lint:check": "xo src/**/*.ts",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^16.0.1",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@swc/cli": "0.1.57",
+    "@swc/core": "1.2.168",
+    "@swc/jest": "^0.2.15",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.8",
+    "husky": "^7.0.4",
+    "jest": "27.5.1",
+    "lint-staged": "12.3.8",
+    "npm-run-all": "4.1.5",
+    "rimraf": "3.0.2",
+    "typescript": "^4.5.4",
+    "xo": "0.48.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)s?$": "@swc/jest"
+    },
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/*.test.ts"
+    ],
+    "testEnvironment": "node"
+  },
+  "xo": {
+    "prettier": true,
+    "env": "node"
+  },
+  "lint-staged": {
+    "*": "xo --fix"
+  },
+  "volta": {
+    "node": "16.14.2",
+    "yarn": "1.22.18"
+  }
+}

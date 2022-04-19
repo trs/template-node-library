@@ -1,0 +1,15 @@
+{
+  "include": ["./src/**/*.ts"],
+  "compilerOptions": {
+    "lib": ["ES2021"],
+    "outDir": "./dist",
+    "module": "ES6",
+    "declaration": true,
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
