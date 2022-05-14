@@ -1,3 +1,5 @@
-import {inc} from '@/lib.js';
+import {inc} from '@/lib.service.js';
 
-console.log('Hello world!', inc(1));
+export const print = () => {
+	console.log('Hello world!', inc(1));
+};

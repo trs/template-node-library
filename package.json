@@ -2,20 +2,28 @@
   "name": "template-node-library",
   "version": "1.0.0",
   "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js"
     }
   },
-  "author": "Tyler Stewart <git@tylerstewart.ca>",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "prebuild": "rimraf dist",
     "build": "run-p build:cjs build:esm",
+    "prebuild:cjs": "rimraf dist/cjs",
+    "prebuild:esm": "rimraf dist/esm",
     "build:cjs": "swc src -d dist/cjs --ignore **/*.ts.js --config module.type=commonjs",
     "build:esm": "swc src -d dist/esm --ignore **/*.ts.js --config module.type=es6",
+    "postbuild:cjs": "touch dist/cjs/package.json && echo '{ \"type\": \"commonjs\" }' > dist/cjs/package.json",
+    "postbuild:esm": "touch dist/esm/package.json && echo '{ \"type\": \"module\" }' > dist/esm/package.json",
+    "prebuild:types": "rimraf dist/types",
     "build:types": "tsc --emitDeclarationOnly",
     "build:prod": "run-p build build:types",
     "lint": "xo src/**/*.ts --fix",
@@ -26,18 +34,18 @@
   "devDependencies": {
     "@commitlint/cli": "^16.0.1",
     "@commitlint/config-conventional": "^16.0.0",
-    "@swc/cli": "0.1.57",
-    "@swc/core": "1.2.168",
-    "@swc/jest": "^0.2.15",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^17.0.8",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.183",
+    "@swc/jest": "^0.2.21",
+    "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.33",
     "husky": "^7.0.4",
-    "jest": "27.5.1",
-    "lint-staged": "12.3.8",
-    "npm-run-all": "4.1.5",
-    "rimraf": "3.0.2",
-    "typescript": "^4.5.4",
-    "xo": "0.48.0"
+    "jest": "^27.5.1",
+    "lint-staged": "^12.3.8",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.4",
+    "xo": "^0.48.0"
   },
   "commitlint": {
     "extends": [

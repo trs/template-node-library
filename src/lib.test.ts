@@ -1,4 +1,4 @@
-import {inc} from '@/lib.js';
+import {inc} from '@/lib.service.js';
 
 describe('lib', () => {
 	test('inc', () => {
